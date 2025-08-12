@@ -1,0 +1,29 @@
+* { box-sizing: border-box; }
+
+.container {
+  max-width: 960px;
+  margin: 24px auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.card {
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.site-header, .site-footer {
+  text-align: center;
+  padding: 16px;
+  background: #f7f7f7;
+  border-radius: 8px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
