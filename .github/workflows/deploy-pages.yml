@@ -1,0 +1,39 @@
+name: Deploy Hello Web to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]              # 只要 main 有變更就部署
+    paths:
+      - 'hello-web/**'              # 變動範圍：hello-web 底下
+      - '.github/workflows/deploy-pages.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site (hello-web as site root)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: hello-web           # 把 hello-web 當網站根目錄
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
